@@ -1,0 +1,35 @@
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100vw; /* footer의 너비를 100% 채워준다. */
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgb(224, 222, 250);
+  background-color: white;
+}
+
+.footer-block {
+  display: flex;
+  justify-content: space-evenly; /* 반응형 */
+  align-items: center;
+}
+
+.footer-icons {
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 25px 0 25px;
+  cursor: pointer; /* 클릭하는 효과를 줄 수 있다. */
+}
+
+.footer-icons__desc {
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.footer-icons__img {
+  width: 30px;
+}
