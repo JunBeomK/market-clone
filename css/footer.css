@@ -30,6 +30,22 @@ footer {
   font-size: 12px;
 }
 
+@keyframes icons-둥-둥 {
+  0% {
+    transform: translateY(0px);
+  }
+  30% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
 .footer-icons__img {
   width: 30px;
+}
+
+.footer-icons__img:hover {
+  animation: 2s icons-둥-둥;
 }
