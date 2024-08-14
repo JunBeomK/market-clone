@@ -4,6 +4,25 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.staticfiles import StaticFiles
 from typing import Annotated
 import sqlite3
+# from pymongo import MongoClient
+# import json
+
+# # MongoDB 연결 설정
+# client = MongoClient('mongodb://localhost:27017/')  # 로컬 MongoDB 인스턴스에 연결
+# db = client['memo_app']  # 사용할 데이터베이스 이름
+# collection = db['notes']  # 사용할 컬렉션 이름
+
+# # JSON 데이터 파일 로드
+# with open('data.json', 'r') as file:
+#     data = json.load(file)
+
+# # 데이터 삽입
+# if isinstance(data, list):  # JSON 데이터가 리스트 형식인 경우
+#     collection.insert_many(data)
+# else:  # JSON 데이터가 단일 객체인 경우
+#     collection.insert_one(data)
+
+# print("데이터 삽입 완료")
 
 con = sqlite3.connect('db.db', check_same_thread=False)
 cur = con.cursor()
@@ -40,7 +59,7 @@ async def create_itme(image:UploadFile,
                 VALUES ('{title}','{image_bytes.hex()}', {price},'{description}','{place}',{insertAt})
                 """)
     con.commit()
-    print(image,title,price,description,place,insertAt)
+    # print(image,title,price,description,place,insertAt)
     return '200'
 
 @app.get('/items')
@@ -62,7 +81,19 @@ async def get_image(item_id):
                           """).fetchone()[0]
     
     return Response(content=bytes.fromhex(image_bytes), media_type='image/*')
-    
+
+@app.post('/signup')
+def signup(id:Annotated[str,Form()],
+           password:Annotated[str,Form()],
+           name:Annotated[str,Form()],
+           email:Annotated[str,Form()]):
+    cur.execute(f"""
+                INSERT INTO users(id, name, email, password)
+                VALUES ('{id}', '{name}', '{email}', '{password}')
+                """)
+    con.commit()
+    print(id,password)
+    return '200'
 
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
 
